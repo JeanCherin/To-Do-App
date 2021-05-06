@@ -1,40 +1,26 @@
 import React from 'react';
-import { Input, InputGroup, InputGroupAddon, Button, ListGroup, ListGroupItem, Navbar, NavbarText, Nav, NavItem, NavLink } from 'reactstrap'
+import { Navbar, NavbarText, Nav, NavItem, NavLink } from 'reactstrap'
+import TodoList from './components/todo-list';
+import TaskList from './components/task-list';
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
     <div>
-      <Navbar style={{ width: 600 }} color="light" light expand="md">
-        <Nav className="mr-auto" navbar>
-          <NavItem>
-            <NavLink href="https://github.com/JeanCherin">My GitHub</NavLink>
-          </NavItem>
-        </Nav>
-        <NavbarText>A To-Do App by Jean Cherin</NavbarText>
-      </Navbar>
-      <div>
-        <InputGroup style={{ width: 400 }}>
-          <Input placeholder="Name of to-do list" />
-          <InputGroupAddon addonType="append"><Button>Add</Button></InputGroupAddon>
-        </InputGroup>
-        <ListGroup style={{ width: 200 }}>
-          <ListGroupItem>To-Do List 1</ListGroupItem>
-          <ListGroupItem>To-Do List 2</ListGroupItem>
-          <ListGroupItem>To-Do List 3</ListGroupItem>
-        </ListGroup>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }} >
+        <Navbar style={{ width: 600 }} className={"border border-3 rounded-3"} color="light" light expand="md">
+          <Nav className="mr-auto" navbar>
+            <NavItem>
+              <NavLink href="https://github.com/JeanCherin">My GitHub</NavLink>
+            </NavItem>
+          </Nav>
+          <NavbarText>A To-Do App by Jean Cherin</NavbarText>
+        </Navbar>
       </div>
-      <div>
-        <InputGroup style={{ width: 400 }}>
-          <Input placeholder="Add Task" />
-          <InputGroupAddon addonType="append"><Button>Add</Button></InputGroupAddon>
-        </InputGroup>
-        <ListGroup style={{ width: 200 }}>
-          <ListGroupItem>Task 1</ListGroupItem>
-          <ListGroupItem>Task 2</ListGroupItem>
-          <ListGroupItem>Task 3</ListGroupItem>
-        </ListGroup>
+      <div style={{ display : 'flex', justifyContent: 'space-around', marginTop: 50 }} >
+        <TodoList />
+        <TaskList />
       </div>
     </div>
   );
