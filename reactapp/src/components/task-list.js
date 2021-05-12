@@ -4,15 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const TaskList = (props) => {
     return (
-        <div>
+        <div className={"border border-info border-3 rounded-3"}>
             <InputGroup style={{ width: 400 }}>
                 <Input placeholder="Add Task" />
                 <InputGroupAddon addonType="append"><Button>Add</Button></InputGroupAddon>
             </InputGroup>
             <ListGroup style={{ width: 400 }}>
-                <ListGroupItem>Task 1</ListGroupItem>
-                <ListGroupItem>Task 2</ListGroupItem>
-                <ListGroupItem>Task 3</ListGroupItem>
             </ListGroup>
         </div>
     )
