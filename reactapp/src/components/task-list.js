@@ -1,18 +1,69 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { Input, InputGroup, InputGroupAddon, Button, ListGroup, ListGroupItem } from 'reactstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faCheckCircle} from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { connect } from 'react-redux'
 
 const TaskList = (props) => {
+
+    const [newTask, setNewTask] = useState('')
+    const [nameError, setNameError] = useState('')
+
+    const handleClick = async () => {
+        taskList.push(newTask);
+        setNewTask('')
+        setNameError('')
+        await fetch('/save-task', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `task=${newTask}&name=${props.listName}`
+        })
+
+    }
+
+    let taskList = props.listTasks;
+    let mapTasks;
+    if (taskList !== undefined && taskList.length > 0) {
+        mapTasks = taskList.map((name, i) => {
+            return <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} key={i}>
+                <div>
+                    {name}
+                </div>
+                <div>
+                    <FontAwesomeIcon style={{ cursor: 'pointer', marginRight: 10 }} icon={faCheckCircle} color='green' />
+                    <FontAwesomeIcon style={{ cursor: 'pointer'}} icon={faTrash} color='red' />
+                </div>
+            </ListGroupItem>
+        })
+    }
+
+
     return (
-        <div className={"border border-info border-3 rounded-3"}>
-            <InputGroup style={{ width: 400 }}>
-                <Input placeholder="Add Task" />
-                <InputGroupAddon addonType="append"><Button>Add</Button></InputGroupAddon>
-            </InputGroup>
+        <div className={"border border-info border-3 rounded-3"} style={{ height: '100%' }}>
+            <div style={{ backgroundColor: '#74b9ff', textAlign: 'center', fontWeight: 'bold' }}>
+                {props.listName}
+            </div>
             <ListGroup style={{ width: 400 }}>
+                {mapTasks}
             </ListGroup>
+            <InputGroup style={{ width: 400 }}>
+                <Input type='text' placeholder="Add Task" value={newTask} onChange={(e) => setNewTask(e.target.value)} />
+                <InputGroupAddon addonType="append">
+                    <Button onClick={() => handleClick()}>Add</Button>
+                </InputGroupAddon>
+            </InputGroup>
+
         </div>
     )
 }
 
-export default TaskList
+const mapStateToProps = (state) => {
+    console.log(state)
+    return { listName: state.list.name, listTasks: state.list.tasks }
+}
+
+export default connect(
+    mapStateToProps,
+    null
+)(TaskList)
